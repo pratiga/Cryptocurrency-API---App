@@ -1,52 +1,58 @@
-import React, { useState, useEffect} from 'react';
-import millify from 'millify';
-import { Link } from 'react-router-dom';
-import {Card, Row, Col, Input } from 'antd';
+import React,{useState,useEffect} from "react";
+import axios from 'axios';
 
-
-import { useGetCryptosQuery } from '../services/cryptoApi';
-
-const Cryptocurrencies = ({simplified}) => {
-  const count = simplified ? 10 : 100;
-  const {data: cryptosList, isFetching } = useGetCryptosQuery(count);
-  const [cryptos, setCryptos] = useState();
-  const [searchTerm,setSearchTerm] = useState('');
+function FetchNews() {
+  const [news, setNews] = useState([ ]) 
+ 
   
   useEffect(() => {
-    setCryptos(cryptosList?.data?.coins);
-    const filteredData = cryptosList?.data?.coins.filter((item) => item.name.toLowerCase().includes(searchTerm));
+  axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false")
+    .then(res => {
+      console.log(res)
+      setNews(res.data)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  })
 
-    setCryptos(filteredData);
-  }, [cryptosList, searchTerm])
-  
-  if(isFetching) return 'Loading... ';
-  
-  
+   
   return (
-   <>
-   {!simplified && (
-   <div className='search-Crypto'>
-      <input placeholder='Search Cryptocurrency' onChange={(e) => setSearchTerm(e.target.value)} />
-   </div>
-   )}
-      <Row gutter={[32, 32]} className="crypto-card-container">
-        {cryptos?.map((currency) => (
-          <Col xs={24} sm={12} lg={6} className="crypto-card" key = {currency.id}>
-            <Link to={`/crypto/${currency.id}`}>
-              <Card 
-                title={`${currency.rank}. ${currency.name}`}
-                extra={<img className='crypto-image' src={currency.iconUrl} />}
-                hoverable >
-                <p>Price: {millify(currency.price)}</p>
-                <p>Market Cap: {millify(currency.marketCap)}</p>
-                <p>Daily Change: (currency.change)%</p>
-              </Card>
-            </Link>
-          </Col>
-        ))}
-      </Row>
-   </>
-  )
-}
-
-export default Cryptocurrencies
+    <>
+    
+    <div className="cont">
+         <div className="row">
+   
+    {
+    news.map((value) => {
+      return (
+        <>
+         <div className="artical"> 
+         <div className="art"> 
+        <div class="cryptoid">
+        <h1>{value.id}</h1>
+        <img src={value.image} alt="" />  
+        </div>
+         <div class="box">
+          <p>{value.symbol}</p>
+        <p>{value.name}</p>
+        <p> {value.current_price}</p>
+         </div> 
+         </div>    
+        
+       </div>
+      
+        </>
+        
+      )
+    })
+  }
+  
+  </div>
+       
+       </div>
+    
+    
+    </>
+  )}
+export default FetchNews
