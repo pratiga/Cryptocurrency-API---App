@@ -17,6 +17,7 @@ main {
   color: #fff;
   width: 300px;
   height: 100vh;
+  position: fixed;
 }
 .top_section{
   display: flex;
