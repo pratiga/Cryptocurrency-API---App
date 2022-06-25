@@ -1,0 +1,55 @@
+.news-card{
+    display: grid;
+    grid-template-columns: repeat(3,32%);
+    padding: 20px;
+    grid-gap: 40px;
+    
+}
+.news-box{
+    border-radius: 2%;
+    box-shadow: 5px 0 5px 0 black;
+    padding: 5px;
+}
+.news-box:hover{
+    cursor: pointer;
+    box-shadow: 0 5px 10px 5px rgb(144, 201, 214);
+    border: none;
+    padding: 0;
+    transition: all 0.25s;
+}
+
+.news-image{
+    position: relative;
+    height: 200px;
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+}
+img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 20px 20px 0 0;
+}
+.news-details{
+    margin: 5px;
+}
+.news-details h1{
+    font-size: 20px;
+    font-weight: 800;
+    text-transform: capitalize;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;  
+}
+
+ @media screen and (max-width: 1000px) and (min-width: 800px){
+        .news-card{
+          display: grid;
+          grid-template-columns: repeat(2,50%);
+        }
+}
+
+    @media only screen and(max-width: 1300px){
+        .news-card{
+            
+        }
+}
+
+ 
